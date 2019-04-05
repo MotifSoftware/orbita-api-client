@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/MotifSoftware/orbita-api-client/issues"
   },
-  "homepage": "https://github.com/MotifSoftware/orbita-api-client#readme"
+  "homepage": "https://github.com/MotifSoftware/orbita-api-client#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.1",
+    "typescript": "^3.4.1"
+  }
 }

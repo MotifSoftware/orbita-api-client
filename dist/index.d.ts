@@ -1,2 +1,2 @@
-declare const _default: 1;
-export default _default;
+import APIClient from './client';
+export default APIClient;
