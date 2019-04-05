@@ -4,11 +4,16 @@
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
+    "lib": ["es6"],
 
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
 
