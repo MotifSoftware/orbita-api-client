@@ -29,6 +29,8 @@
     "prettier": "1.16.4",
     "ts-jest": "^24.0.1",
     "tslint": "^5.15.0",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.1",
+    "@types/isomorphic-fetch": "0.0.35",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
