@@ -3,7 +3,8 @@ export default interface ChatResponse {
     chat: ChatData,
     screen: ScreenData,
     buttons: ButtonData,
-    audio?: AudioData
+    audio?: AudioData,
+    type: "success"
 }
 
 export interface VoiceData {

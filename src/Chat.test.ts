@@ -43,7 +43,7 @@ const exampleAudioData = {
   data: [255, 243, 68, 196]
 };
 
-beforeAll(() => {
+const mockNormalFetchResponse = () => {
   jest.spyOn(global, "fetch").mockImplementation(() => Promise.resolve({
     json: () => Promise.resolve({
       orbitaPayload: exampleOrbitaPayload,
@@ -53,6 +53,16 @@ beforeAll(() => {
       sayTextAudio: exampleAudioData
     })
   }));
+};
+
+const mockBadFetchResponse = () => {
+  jest.spyOn(global, "fetch").mockImplementation(() => Promise.resolve({
+    json: () => Promise.resolve({})
+  }));
+};
+
+beforeAll(() => {
+  mockNormalFetchResponse();
 });
 
 afterEach(() => {
@@ -162,6 +172,7 @@ describe('Chat', () => {
         chat: exampleOrbitaPayload.payload.multiagent.chat,
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+        type: "success"
       });
     });
 
@@ -188,6 +199,7 @@ describe('Chat', () => {
         chat: exampleOrbitaPayload.payload.multiagent.chat,
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+        type: "success"
       });
     });
 
@@ -214,8 +226,59 @@ describe('Chat', () => {
         chat: exampleOrbitaPayload.payload.multiagent.chat,
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
-        audio: exampleAudioData
+        audio: exampleAudioData,
+        type: "success"
       });
+    });
+
+    it("Returns a failure response when expected response properties are missing (V1)", async () => {
+      const chatSettings = {
+        endpoint: "http://some-environment.orbita.cloud:8443/oeapi/chat",
+        orbitaNodeVersion: 1
+      };
+
+      mockBadFetchResponse();
+
+      const chat = new Chat(chatSettings);
+
+      const message = "some message";
+      const sessionId = "aSessionId";
+      const audio = true;
+
+      const response = await chat.send({
+        message,
+        sessionId,
+        audio
+      });
+
+      expect(response.type).toEqual("failure");
+
+      mockNormalFetchResponse();
+    });
+
+    it("Returns a failure response when expected response properties are missing (V2)", async () => {
+      const chatSettings = {
+        endpoint: "http://some-environment.orbita.cloud:8443/oeapi/chat",
+        orbitaNodeVersion: 2
+      };
+
+      mockBadFetchResponse();
+
+      const chat = new Chat(chatSettings);
+
+      const message = "some message";
+      const sessionId = "aSessionId";
+      const audio = true;
+
+      const response = await chat.send({
+        message,
+        sessionId,
+        audio
+      });
+
+      expect(response.type).toEqual("failure");
+
+      mockNormalFetchResponse();
     });
   });
 });
