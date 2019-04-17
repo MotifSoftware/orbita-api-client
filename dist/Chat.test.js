@@ -79,7 +79,7 @@ var exampleAudioData = {
     type: "Buffer",
     data: [255, 243, 68, 196]
 };
-beforeAll(function () {
+var mockNormalFetchResponse = function () {
     jest.spyOn(global, "fetch").mockImplementation(function () { return Promise.resolve({
         json: function () { return Promise.resolve({
             orbitaPayload: exampleOrbitaPayload,
@@ -89,6 +89,14 @@ beforeAll(function () {
             sayTextAudio: exampleAudioData
         }); }
     }); });
+};
+var mockBadFetchResponse = function () {
+    jest.spyOn(global, "fetch").mockImplementation(function () { return Promise.resolve({
+        json: function () { return Promise.resolve({}); }
+    }); });
+};
+beforeAll(function () {
+    mockNormalFetchResponse();
 });
 afterEach(function () {
     global.fetch.mockClear();
@@ -201,6 +209,7 @@ describe('Chat', function () {
                             chat: exampleOrbitaPayload.payload.multiagent.chat,
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+                            type: "success"
                         });
                         return [2 /*return*/];
                 }
@@ -231,6 +240,7 @@ describe('Chat', function () {
                             chat: exampleOrbitaPayload.payload.multiagent.chat,
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+                            type: "success"
                         });
                         return [2 /*return*/];
                 }
@@ -261,8 +271,63 @@ describe('Chat', function () {
                             chat: exampleOrbitaPayload.payload.multiagent.chat,
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
-                            audio: exampleAudioData
+                            audio: exampleAudioData,
+                            type: "success"
                         });
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it("Returns a failure response when expected response properties are missing (V1)", function () { return __awaiter(_this, void 0, void 0, function () {
+            var chatSettings, chat, message, sessionId, audio, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        chatSettings = {
+                            endpoint: "http://some-environment.orbita.cloud:8443/oeapi/chat",
+                            orbitaNodeVersion: 1
+                        };
+                        mockBadFetchResponse();
+                        chat = new Chat_1.default(chatSettings);
+                        message = "some message";
+                        sessionId = "aSessionId";
+                        audio = true;
+                        return [4 /*yield*/, chat.send({
+                                message: message,
+                                sessionId: sessionId,
+                                audio: audio
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.type).toEqual("failure");
+                        mockNormalFetchResponse();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it("Returns a failure response when expected response properties are missing (V2)", function () { return __awaiter(_this, void 0, void 0, function () {
+            var chatSettings, chat, message, sessionId, audio, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        chatSettings = {
+                            endpoint: "http://some-environment.orbita.cloud:8443/oeapi/chat",
+                            orbitaNodeVersion: 2
+                        };
+                        mockBadFetchResponse();
+                        chat = new Chat_1.default(chatSettings);
+                        message = "some message";
+                        sessionId = "aSessionId";
+                        audio = true;
+                        return [4 /*yield*/, chat.send({
+                                message: message,
+                                sessionId: sessionId,
+                                audio: audio
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.type).toEqual("failure");
+                        mockNormalFetchResponse();
                         return [2 /*return*/];
                 }
             });
