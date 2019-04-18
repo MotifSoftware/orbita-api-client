@@ -1,6 +1,6 @@
 {
   "name": "orbita-api-client",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "NodeJS client for accessing Orbita's API.",
   "main": "dist/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   ],
   "author": "Orbita",
   "license": "MIT",
-  "types": "dist/types.d.ts",
+  "types": "dist/index.d.ts",
   "bugs": {
     "url": "https://github.com/MotifSoftware/orbita-api-client/issues"
   },
