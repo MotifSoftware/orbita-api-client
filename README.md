@@ -3,9 +3,10 @@
 
 ## Currently Available APIs
 
-- `Chat` - Provides the async method `send` for sending chat requests and receiving response from an Orbita chat endpoint.
+- [Chat](#Chat) - Provides the async method `send` for sending chat requests and receiving response from an Orbita chat endpoint.
 
-### Usage example
+### Chat
+## Usage example
 
 ```
 const { APIClient } = require("orbita-api-client"),
