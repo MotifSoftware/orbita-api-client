@@ -42,20 +42,23 @@ var Chat = /** @class */ (function () {
     }
     Chat.prototype.send = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var isVersion1, requestBody, fetchResponse, responseJSON, orbitaPayload, response;
+            var isVersion1, requestBody, fetchResponse, responseJSON, orbitaPayload, response, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 3, , 4]);
                         isVersion1 = this.settings.orbitaNodeVersion && this.settings.orbitaNodeVersion === 1;
                         requestBody = isVersion1 ?
                             {
                                 query: request.message,
                                 sessionId: request.sessionId,
-                                audio: request.audio
+                                audio: request.audio,
+                                customData: request.customData
                             } : {
                             text: request.message,
                             sessionId: request.sessionId,
-                            audio: request.audio
+                            audio: request.audio,
+                            customData: request.customData
                         };
                         return [4 /*yield*/, fetch(this.settings.endpoint, {
                                 method: "POST",
@@ -69,21 +72,41 @@ var Chat = /** @class */ (function () {
                         return [4 /*yield*/, fetchResponse.json()];
                     case 2:
                         responseJSON = _a.sent();
-                        orbitaPayload = isVersion1 ? responseJSON.data.orbitaPayload.payload : responseJSON.orbitaPayload.payload;
-                        response = request.audio && !isVersion1 ?
-                            {
+                        if ((isVersion1 && !responseJSON.data) || (!isVersion1 && !responseJSON.orbitaPayload.payload)) {
+                            return [2 /*return*/, {
+                                    text: "I'm sorry, I did not understand.",
+                                    reprompt: "Can you say that again?",
+                                    type: "failure"
+                                }];
+                        }
+                        else {
+                            orbitaPayload = isVersion1 ? responseJSON.data.orbitaPayload.payload : responseJSON.orbitaPayload.payload;
+                            response = request.audio && !isVersion1 ?
+                                {
+                                    voice: orbitaPayload.multiagent.voice,
+                                    chat: orbitaPayload.multiagent.chat,
+                                    screen: orbitaPayload.multiagent.screen,
+                                    buttons: orbitaPayload.multiagent.buttons,
+                                    audio: responseJSON.sayTextAudio,
+                                    type: "success"
+                                } : {
                                 voice: orbitaPayload.multiagent.voice,
                                 chat: orbitaPayload.multiagent.chat,
                                 screen: orbitaPayload.multiagent.screen,
                                 buttons: orbitaPayload.multiagent.buttons,
-                                audio: responseJSON.sayTextAudio
-                            } : {
-                            voice: orbitaPayload.multiagent.voice,
-                            chat: orbitaPayload.multiagent.chat,
-                            screen: orbitaPayload.multiagent.screen,
-                            buttons: orbitaPayload.multiagent.buttons,
-                        };
-                        return [2 /*return*/, response];
+                                type: "success"
+                            };
+                            return [2 /*return*/, response];
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, {
+                                text: "I'm sorry, I couldn't process your request. Please try again in a moment.",
+                                reprompt: "Can you please try again?",
+                                type: "failure"
+                            }];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

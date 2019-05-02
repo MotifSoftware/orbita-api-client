@@ -19,11 +19,13 @@ export default class Chat {
         {
           query: request.message,
           sessionId: request.sessionId,
-          audio: request.audio
+          audio: request.audio,
+          customData: request.customData
         } : {
           text: request.message,
           sessionId: request.sessionId,
-          audio: request.audio
+          audio: request.audio,
+          customData: request.customData
         };
 
       const fetchResponse = await fetch(this.settings.endpoint, {

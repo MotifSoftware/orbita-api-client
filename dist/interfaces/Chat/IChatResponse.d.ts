@@ -4,6 +4,7 @@ export default interface ChatResponse {
     screen: ScreenData;
     buttons: ButtonData;
     audio?: AudioData;
+    type: "success";
 }
 export interface VoiceData {
     sayText: string;

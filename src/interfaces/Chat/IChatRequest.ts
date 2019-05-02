@@ -1,5 +1,6 @@
 export default interface ChatRequest {
     message: string,
     sessionId: string,
-    audio: boolean
+    audio: boolean,
+    customData?: any
 }
