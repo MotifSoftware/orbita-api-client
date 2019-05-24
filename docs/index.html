@@ -62,9 +62,46 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="orbita-api-client">Orbita API Client</h1>
-				<h2 id="installation">Installation</h2>
-				<pre><code>&gt; npm install <span class="hljs-comment">--save orbita-api-client</span></code></pre><h2 id="usage">Usage</h2>
+				<h1 id="orbita-api-client">orbita-api-client</h1>
+				<h2 id="currently-available-apis">Currently Available APIs</h2>
+				<ul>
+					<li><a href="#Chat">Chat</a> - Provides the async method <code>send</code> for sending chat requests and receiving response from an Orbita chat endpoint.</li>
+				</ul>
+				<h2 id="chat">Chat</h2>
+				<h3 id="usage-example">Usage example</h3>
+				<pre><code><span class="hljs-keyword">const</span> { APIClient } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"orbita-api-client"</span>),
+    uuid = <span class="hljs-built_in">require</span>(<span class="hljs-string">"uuid"</span>);
+
+<span class="hljs-comment">// Example API client settings</span>
+<span class="hljs-keyword">const</span> settings = {
+    <span class="hljs-attr">chat</span>: {
+        <span class="hljs-comment">// In Orbita, this should be an HTTP endpoint that feeds directly into an NLP connector node without manipulating the data</span>
+        endpoint: <span class="hljs-string">"https://environment-name.orbita.cloud:8443/oeapi/chat"</span>,
+        <span class="hljs-comment">// Switch this to 2 if using version 2 of the NLP connector node</span>
+        orbitaNodeVersion: <span class="hljs-number">1</span>
+    }
+};
+
+<span class="hljs-comment">// Instantiate the client</span>
+<span class="hljs-keyword">const</span> apiClient = <span class="hljs-keyword">new</span> APIClient(settings);
+
+<span class="hljs-comment">// A session ID is required for all requests</span>
+<span class="hljs-keyword">const</span> sessionId = uuid.v4();
+
+<span class="hljs-comment">// Example chat request</span>
+<span class="hljs-keyword">const</span> chatRequest = {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">"An example chat message"</span>,
+    sessionId,
+    <span class="hljs-attr">audio</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// If true, a byte representation of the response as audio will be returned in the chat response</span>
+    customData: { <span class="hljs-comment">// Additional data to pass through to the Orbita endpoint</span>
+        additionalData: <span class="hljs-string">"as needed"</span>
+    }
+};
+
+<span class="hljs-comment">// Send the chat request</span>
+apiClient.Chat.send(chatRequest)
+    .then(<span class="hljs-function"><span class="hljs-params">chatResponse</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(chatResponse.chat.chatText)) <span class="hljs-comment">// Log the response</span>
+    .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(error)); <span class="hljs-comment">// Or log the error, if one occured</span></code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
