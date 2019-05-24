@@ -1,0 +1,7 @@
+{
+  "exclude": "**/*.test.js",
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "mode": "file",
+  "out": "docs"
+}

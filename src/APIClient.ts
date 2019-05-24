@@ -2,8 +2,8 @@ import Settings from "./interfaces/ISettings";
 import Chat from "./Chat";
 
 export default class APIClient {
-  _settings: Settings;
-  _chat: Chat;
+  private _settings: Settings;
+  private _chat: Chat;
 
   constructor(settings: Settings) {
     this._settings = settings;

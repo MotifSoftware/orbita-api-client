@@ -5,7 +5,7 @@ import ChatResponse from "./interfaces/Chat/IChatResponse";
 import FailureResponse from "./interfaces/Chat/IFailureResponse";
 
 export default class Chat {
-  _settings: ChatSettings;
+  private _settings: ChatSettings;
 
   constructor(settings: ChatSettings) {
     this._settings = settings;
