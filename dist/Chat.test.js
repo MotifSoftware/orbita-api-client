@@ -39,6 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var fetch = require("jest-fetch-mock");
+jest.setMock("node-fetch", fetch);
 var Chat_1 = __importDefault(require("./Chat"));
 var exampleOrbitaPayload = {
     payload: {
@@ -80,26 +82,22 @@ var exampleAudioData = {
     data: [255, 243, 68, 196]
 };
 var mockNormalFetchResponse = function () {
-    jest.spyOn(global, "fetch").mockImplementation(function () { return Promise.resolve({
-        json: function () { return Promise.resolve({
-            orbitaPayload: exampleOrbitaPayload,
-            data: {
-                orbitaPayload: exampleOrbitaPayload
-            },
-            sayTextAudio: exampleAudioData
-        }); }
-    }); });
+    fetch.mockResponse(JSON.stringify({
+        orbitaPayload: exampleOrbitaPayload,
+        data: {
+            orbitaPayload: exampleOrbitaPayload
+        },
+        sayTextAudio: exampleAudioData
+    }));
 };
 var mockBadFetchResponse = function () {
-    jest.spyOn(global, "fetch").mockImplementation(function () { return Promise.resolve({
-        json: function () { return Promise.resolve({}); }
-    }); });
+    fetch.mockResponse(JSON.stringify({}));
 };
 beforeAll(function () {
     mockNormalFetchResponse();
 });
 afterEach(function () {
-    global.fetch.mockClear();
+    fetch.mockClear();
 });
 describe('Chat', function () {
     it('exposes chat settings', function () {
@@ -141,8 +139,8 @@ describe('Chat', function () {
                                 "Content-Type": "application/json"
                             }
                         };
-                        expect(global.fetch).toHaveBeenCalledTimes(1);
-                        expect(global.fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
+                        expect(fetch).toHaveBeenCalledTimes(1);
+                        expect(fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
                         return [2 /*return*/];
                 }
             });
@@ -178,8 +176,8 @@ describe('Chat', function () {
                                 "Content-Type": "application/json"
                             }
                         };
-                        expect(global.fetch).toHaveBeenCalledTimes(1);
-                        expect(global.fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
+                        expect(fetch).toHaveBeenCalledTimes(1);
+                        expect(fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
                         return [2 /*return*/];
                 }
             });

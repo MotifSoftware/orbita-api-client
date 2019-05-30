@@ -1,4 +1,5 @@
-declare var global: any;
+const fetch = require("jest-fetch-mock");
+jest.setMock("node-fetch", fetch);
 
 import Chat from "./Chat";
 
@@ -44,21 +45,17 @@ const exampleAudioData = {
 };
 
 const mockNormalFetchResponse = () => {
-  jest.spyOn(global, "fetch").mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve({
-      orbitaPayload: exampleOrbitaPayload,
-      data: {
-        orbitaPayload: exampleOrbitaPayload
-      },
-      sayTextAudio: exampleAudioData
-    })
+  fetch.mockResponse(JSON.stringify({
+    orbitaPayload: exampleOrbitaPayload,
+    data: {
+      orbitaPayload: exampleOrbitaPayload
+    },
+    sayTextAudio: exampleAudioData
   }));
 };
 
 const mockBadFetchResponse = () => {
-  jest.spyOn(global, "fetch").mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve({})
-  }));
+  fetch.mockResponse(JSON.stringify({}));
 };
 
 beforeAll(() => {
@@ -66,7 +63,7 @@ beforeAll(() => {
 });
 
 afterEach(() => {
-  global.fetch.mockClear();
+  fetch.mockClear();
 });
 
 describe('Chat', () => {
@@ -111,8 +108,8 @@ describe('Chat', () => {
         }
       };
 
-      expect(global.fetch).toHaveBeenCalledTimes(1);
-      expect(global.fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
     });
 
     it("POSTs an appropriate request to the configured chat endpoint (V2)", async () => {
@@ -145,8 +142,8 @@ describe('Chat', () => {
         }
       };
 
-      expect(global.fetch).toHaveBeenCalledTimes(1);
-      expect(global.fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(chatSettings.endpoint, expectedRequest);
     });
 
     it("Returns an appropriate response (V1)", async () => {
