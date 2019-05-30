@@ -34,11 +34,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var cross_fetch_1 = __importDefault(require("cross-fetch"));
+require("isomorphic-fetch");
 var Chat = /** @class */ (function () {
     function Chat(settings) {
         this._settings = settings;
@@ -63,7 +60,7 @@ var Chat = /** @class */ (function () {
                             audio: request.audio,
                             customData: request.customData
                         };
-                        return [4 /*yield*/, cross_fetch_1.default(this.settings.endpoint, {
+                        return [4 /*yield*/, fetch(this.settings.endpoint, {
                                 method: "POST",
                                 body: JSON.stringify(requestBody),
                                 headers: {
