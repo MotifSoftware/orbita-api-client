@@ -1,4 +1,4 @@
-import "isomorphic-fetch";
+import "cross-fetch";
 import ChatSettings from "./interfaces/Chat/IChatSettings";
 import ChatRequest from "./interfaces/Chat/IChatRequest";
 import ChatResponse from "./interfaces/Chat/IChatResponse";

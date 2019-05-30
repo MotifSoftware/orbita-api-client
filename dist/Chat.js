@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("isomorphic-fetch");
+require("cross-fetch");
 var Chat = /** @class */ (function () {
     function Chat(settings) {
         this._settings = settings;
