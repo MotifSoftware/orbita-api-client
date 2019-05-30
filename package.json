@@ -1,6 +1,6 @@
 {
   "name": "orbita-api-client",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "NodeJS client for accessing Orbita's API.",
   "main": "dist/index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "ts-jest": "^24.0.1",
     "tslint": "^5.15.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.1",
+    "whatwg-fetch": "^2.0.4"
   }
 }
