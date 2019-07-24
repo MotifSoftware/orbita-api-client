@@ -55,18 +55,21 @@ export default class Chat {
             screen: orbitaPayload.multiagent.screen,
             buttons: orbitaPayload.multiagent.buttons,
             audio: responseJSON.sayTextAudio,
+            directive: orbitaPayload.directive,
             type: "success"
           } : {
             voice: orbitaPayload.multiagent.voice,
             chat: orbitaPayload.multiagent.chat,
             screen: orbitaPayload.multiagent.screen,
             buttons: orbitaPayload.multiagent.buttons,
+            directive: orbitaPayload.directive,
             type: "success"
           };
 
         return response;
       }
     } catch (error) {
+      console.log(error);
       return {
         text: "I'm sorry, I couldn't process your request. Please try again in a moment.",
         reprompt: "Can you please try again?",

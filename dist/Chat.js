@@ -91,12 +91,14 @@ var Chat = /** @class */ (function () {
                                     screen: orbitaPayload.multiagent.screen,
                                     buttons: orbitaPayload.multiagent.buttons,
                                     audio: responseJSON.sayTextAudio,
+                                    directive: orbitaPayload.directive,
                                     type: "success"
                                 } : {
                                 voice: orbitaPayload.multiagent.voice,
                                 chat: orbitaPayload.multiagent.chat,
                                 screen: orbitaPayload.multiagent.screen,
                                 buttons: orbitaPayload.multiagent.buttons,
+                                directive: orbitaPayload.directive,
                                 type: "success"
                             };
                             return [2 /*return*/, response];
@@ -104,6 +106,7 @@ var Chat = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _a.sent();
+                        console.log(error_1);
                         return [2 /*return*/, {
                                 text: "I'm sorry, I couldn't process your request. Please try again in a moment.",
                                 reprompt: "Can you please try again?",

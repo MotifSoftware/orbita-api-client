@@ -4,6 +4,7 @@ export default interface ChatResponse {
     screen: ScreenData,
     buttons: ButtonData,
     audio?: AudioData,
+    directive?: Directive
     type: "success"
 }
 
@@ -39,4 +40,10 @@ export interface ButtonChoice {
 export interface AudioData {
     type: string,
     data: Array<number>
+}
+
+export interface Directive {
+    type: string,
+    title?: string,
+    options?: any
 }
