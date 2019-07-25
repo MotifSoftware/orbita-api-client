@@ -4,7 +4,7 @@ export default interface ChatResponse {
     screen: ScreenData;
     buttons: ButtonData;
     audio?: AudioData;
-    directive?: Directive;
+    directives?: Array<Directive>;
     type: "success";
 }
 export interface VoiceData {

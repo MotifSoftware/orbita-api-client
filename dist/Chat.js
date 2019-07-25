@@ -91,14 +91,14 @@ var Chat = /** @class */ (function () {
                                     screen: orbitaPayload.multiagent.screen,
                                     buttons: orbitaPayload.multiagent.buttons,
                                     audio: responseJSON.sayTextAudio,
-                                    directive: orbitaPayload.directive,
+                                    directives: orbitaPayload.directive,
                                     type: "success"
                                 } : {
                                 voice: orbitaPayload.multiagent.voice,
                                 chat: orbitaPayload.multiagent.chat,
                                 screen: orbitaPayload.multiagent.screen,
                                 buttons: orbitaPayload.multiagent.buttons,
-                                directive: orbitaPayload.directive,
+                                directives: orbitaPayload.directive,
                                 type: "success"
                             };
                             return [2 /*return*/, response];
