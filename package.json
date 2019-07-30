@@ -24,7 +24,7 @@
     "url": "https://github.com/MotifSoftware/orbita-api-client/issues"
   },
   "homepage": "https://github.com/MotifSoftware/orbita-api-client#readme",
-  "dependencies": {
+  "peerDependencies": {
     "cross-fetch": "^3.0.4"
   },
   "devDependencies": {
