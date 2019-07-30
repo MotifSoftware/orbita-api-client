@@ -24,10 +24,12 @@
     "url": "https://github.com/MotifSoftware/orbita-api-client/issues"
   },
   "homepage": "https://github.com/MotifSoftware/orbita-api-client#readme",
+  "dependencies": {
+    "cross-fetch": "^3.0.4"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "@types/node-fetch": "^2.3.4",
-    "cross-fetch": "^3.0.4",
     "jest": "^24.7.1",
     "jest-fetch-mock": "^2.1.2",
     "prettier": "1.16.4",
