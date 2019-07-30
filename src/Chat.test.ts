@@ -1,5 +1,5 @@
 const fetch = require("jest-fetch-mock");
-jest.setMock("node-fetch", fetch);
+jest.setMock("cross-fetch", fetch);
 
 import Chat from "./Chat";
 

@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 import ChatSettings from "./interfaces/Chat/IChatSettings";
 import ChatRequest from "./interfaces/Chat/IChatRequest";
 import ChatResponse from "./interfaces/Chat/IChatResponse";

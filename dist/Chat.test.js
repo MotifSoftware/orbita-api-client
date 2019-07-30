@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fetch = require("jest-fetch-mock");
-jest.setMock("node-fetch", fetch);
+jest.setMock("cross-fetch", fetch);
 var Chat_1 = __importDefault(require("./Chat"));
 var exampleOrbitaPayload = {
     payload: {
