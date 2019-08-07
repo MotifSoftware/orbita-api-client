@@ -74,7 +74,10 @@ var exampleOrbitaPayload = {
                     },
                 ],
             }
-        }
+        },
+        directive: [
+            { type: "some-directive" }
+        ]
     }
 };
 var exampleAudioData = {
@@ -207,6 +210,8 @@ describe('Chat', function () {
                             chat: exampleOrbitaPayload.payload.multiagent.chat,
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+                            directives: exampleOrbitaPayload.payload.directive,
+                            rawPayload: exampleOrbitaPayload.payload,
                             type: "success"
                         });
                         return [2 /*return*/];
@@ -238,6 +243,8 @@ describe('Chat', function () {
                             chat: exampleOrbitaPayload.payload.multiagent.chat,
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+                            directives: exampleOrbitaPayload.payload.directive,
+                            rawPayload: exampleOrbitaPayload.payload,
                             type: "success"
                         });
                         return [2 /*return*/];
@@ -270,6 +277,8 @@ describe('Chat', function () {
                             screen: exampleOrbitaPayload.payload.multiagent.screen,
                             buttons: exampleOrbitaPayload.payload.multiagent.buttons,
                             audio: exampleAudioData,
+                            directives: exampleOrbitaPayload.payload.directive,
+                            rawPayload: exampleOrbitaPayload.payload,
                             type: "success"
                         });
                         return [2 /*return*/];

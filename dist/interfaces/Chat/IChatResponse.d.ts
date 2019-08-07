@@ -5,6 +5,7 @@ export default interface ChatResponse {
     buttons: ButtonData;
     audio?: AudioData;
     directives?: Array<Directive>;
+    rawPayload: any;
     type: "success";
 }
 export interface VoiceData {

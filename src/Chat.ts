@@ -56,6 +56,7 @@ export default class Chat {
             buttons: orbitaPayload.multiagent.buttons,
             audio: responseJSON.sayTextAudio,
             directives: orbitaPayload.directive,
+            rawPayload: orbitaPayload,
             type: "success"
           } : {
             voice: orbitaPayload.multiagent.voice,
@@ -63,6 +64,7 @@ export default class Chat {
             screen: orbitaPayload.multiagent.screen,
             buttons: orbitaPayload.multiagent.buttons,
             directives: orbitaPayload.directive,
+            rawPayload: orbitaPayload,
             type: "success"
           };
 

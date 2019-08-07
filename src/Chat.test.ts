@@ -35,7 +35,10 @@ const exampleOrbitaPayload = {
           },
         ],
       }
-    }
+    },
+    directive: [
+      { type: "some-directive" }
+    ]
   }
 };
 
@@ -169,6 +172,8 @@ describe('Chat', () => {
         chat: exampleOrbitaPayload.payload.multiagent.chat,
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+        directives: exampleOrbitaPayload.payload.directive,
+        rawPayload: exampleOrbitaPayload.payload,
         type: "success"
       });
     });
@@ -196,6 +201,8 @@ describe('Chat', () => {
         chat: exampleOrbitaPayload.payload.multiagent.chat,
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
+        directives: exampleOrbitaPayload.payload.directive,
+        rawPayload: exampleOrbitaPayload.payload,
         type: "success"
       });
     });
@@ -224,6 +231,8 @@ describe('Chat', () => {
         screen: exampleOrbitaPayload.payload.multiagent.screen,
         buttons: exampleOrbitaPayload.payload.multiagent.buttons,
         audio: exampleAudioData,
+        directives: exampleOrbitaPayload.payload.directive,
+        rawPayload: exampleOrbitaPayload.payload,
         type: "success"
       });
     });
