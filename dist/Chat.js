@@ -45,7 +45,7 @@ var Chat = /** @class */ (function () {
     }
     Chat.prototype.send = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var isVersion1, requestBody, fetchResponse, responseJSON, orbitaPayload, response, error_1;
+            var isVersion1, requestBody, fetchResponse, responseJSON, orbitaPayload, orbitaPayload, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -75,35 +75,74 @@ var Chat = /** @class */ (function () {
                         return [4 /*yield*/, fetchResponse.json()];
                     case 2:
                         responseJSON = _a.sent();
-                        if ((isVersion1 && !responseJSON.data) || (!isVersion1 && !responseJSON.orbitaPayload.payload)) {
-                            return [2 /*return*/, {
-                                    text: "I'm sorry, I did not understand.",
-                                    reprompt: "Can you say that again?",
-                                    type: "failure"
-                                }];
+                        if (isVersion1) {
+                            if (!responseJSON.data) {
+                                return [2 /*return*/, {
+                                        text: "I'm sorry, I did not understand.",
+                                        reprompt: "Can you say that again?",
+                                        type: "failure"
+                                    }];
+                            }
+                            else {
+                                orbitaPayload = responseJSON.data.orbitaPayload.payload;
+                                return [2 /*return*/, {
+                                        voice: orbitaPayload.multiagent.voice,
+                                        chat: orbitaPayload.multiagent.chat,
+                                        screen: orbitaPayload.multiagent.screen,
+                                        buttons: orbitaPayload.multiagent.buttons,
+                                        directives: orbitaPayload.directive,
+                                        rawPayload: orbitaPayload.payload,
+                                        type: "success"
+                                    }];
+                            }
                         }
                         else {
-                            orbitaPayload = isVersion1 ? responseJSON.data.orbitaPayload.payload : responseJSON.orbitaPayload.payload;
-                            response = request.audio && !isVersion1 ?
-                                {
-                                    voice: orbitaPayload.multiagent.voice,
-                                    chat: orbitaPayload.multiagent.chat,
-                                    screen: orbitaPayload.multiagent.screen,
-                                    buttons: orbitaPayload.multiagent.buttons,
-                                    audio: responseJSON.sayTextAudio,
-                                    directives: orbitaPayload.directive,
-                                    rawPayload: orbitaPayload,
-                                    type: "success"
-                                } : {
-                                voice: orbitaPayload.multiagent.voice,
-                                chat: orbitaPayload.multiagent.chat,
-                                screen: orbitaPayload.multiagent.screen,
-                                buttons: orbitaPayload.multiagent.buttons,
-                                directives: orbitaPayload.directive,
-                                rawPayload: orbitaPayload,
-                                type: "success"
-                            };
-                            return [2 /*return*/, response];
+                            if (responseJSON.orbitaPayload.payload) {
+                                orbitaPayload = responseJSON.orbitaPayload.payload;
+                                return [2 /*return*/, {
+                                        voice: orbitaPayload.multiagent.voice,
+                                        chat: orbitaPayload.multiagent.chat,
+                                        screen: orbitaPayload.multiagent.screen,
+                                        buttons: orbitaPayload.multiagent.buttons,
+                                        audio: request.audio ? responseJSON.sayTextAudio : undefined,
+                                        directives: orbitaPayload.directive,
+                                        rawPayload: orbitaPayload,
+                                        type: "success"
+                                    }];
+                            }
+                            else if (responseJSON.text) {
+                                return [2 /*return*/, {
+                                        voice: {
+                                            sayText: responseJSON.text,
+                                            rePrompt: responseJSON.reprompt
+                                        },
+                                        chat: {
+                                            chatText: responseJSON.text,
+                                            rePrompt: responseJSON.reprompt
+                                        },
+                                        screen: {
+                                            largeImage: "",
+                                            smallImage: "",
+                                            shortTitle: "",
+                                            body: "",
+                                            longTitle: "",
+                                        },
+                                        buttons: {
+                                            name: "",
+                                            type: "",
+                                            choices: []
+                                        },
+                                        rawPayload: {},
+                                        type: "success"
+                                    }];
+                            }
+                            else {
+                                return [2 /*return*/, {
+                                        text: "I'm sorry, I did not understand.",
+                                        reprompt: "Can you say that again?",
+                                        type: "failure"
+                                    }];
+                            }
                         }
                         return [3 /*break*/, 4];
                     case 3:

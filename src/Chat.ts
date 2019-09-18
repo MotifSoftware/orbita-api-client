@@ -38,37 +38,73 @@ export default class Chat {
 
       const responseJSON = await fetchResponse.json();
 
-      if ((isVersion1 && !responseJSON.data) || (!isVersion1 && !responseJSON.orbitaPayload.payload)) {
-        return {
-          text: "I'm sorry, I did not understand.",
-          reprompt: "Can you say that again?",
-          type: "failure"
-        };
-      } else {
-
-        const orbitaPayload = isVersion1 ? responseJSON.data.orbitaPayload.payload : responseJSON.orbitaPayload.payload;
-
-        const response: ChatResponse = request.audio && !isVersion1 ?
-          {
-            voice: orbitaPayload.multiagent.voice,
-            chat: orbitaPayload.multiagent.chat,
-            screen: orbitaPayload.multiagent.screen,
-            buttons: orbitaPayload.multiagent.buttons,
-            audio: responseJSON.sayTextAudio,
-            directives: orbitaPayload.directive,
-            rawPayload: orbitaPayload,
-            type: "success"
-          } : {
-            voice: orbitaPayload.multiagent.voice,
-            chat: orbitaPayload.multiagent.chat,
-            screen: orbitaPayload.multiagent.screen,
-            buttons: orbitaPayload.multiagent.buttons,
-            directives: orbitaPayload.directive,
-            rawPayload: orbitaPayload,
-            type: "success"
+      if (isVersion1) {
+        if (!responseJSON.data) {
+          return {
+            text: "I'm sorry, I did not understand.",
+            reprompt: "Can you say that again?",
+            type: "failure"
           };
+        } else {
+          const orbitaPayload = responseJSON.data.orbitaPayload.payload;
 
-        return response;
+          return {
+            voice: orbitaPayload.multiagent.voice,
+            chat: orbitaPayload.multiagent.chat,
+            screen: orbitaPayload.multiagent.screen,
+            buttons: orbitaPayload.multiagent.buttons,
+            directives: orbitaPayload.directive,
+            rawPayload: orbitaPayload.payload,
+            type: "success"
+          }
+        }
+      } else {
+        if (responseJSON.orbitaPayload.payload) {
+          const orbitaPayload = responseJSON.orbitaPayload.payload;
+
+          return {
+            voice: orbitaPayload.multiagent.voice,
+            chat: orbitaPayload.multiagent.chat,
+            screen: orbitaPayload.multiagent.screen,
+            buttons: orbitaPayload.multiagent.buttons,
+            audio: request.audio ? responseJSON.sayTextAudio : undefined,
+            directives: orbitaPayload.directive,
+            rawPayload: orbitaPayload,
+            type: "success"
+          }
+
+        } else if (responseJSON.text) {
+          return {
+            voice: {
+              sayText: responseJSON.text,
+              rePrompt: responseJSON.reprompt
+            },
+            chat: {
+              chatText: responseJSON.text,
+              rePrompt: responseJSON.reprompt
+            },
+            screen: {
+              largeImage: "",
+              smallImage: "",
+              shortTitle: "",
+              body: "",
+              longTitle: "",
+            },
+            buttons: {
+              name: "",
+              type: "",
+              choices: []
+            },
+            rawPayload: {},
+            type: "success"
+          }
+        } else {
+          return {
+            text: "I'm sorry, I did not understand.",
+            reprompt: "Can you say that again?",
+            type: "failure"
+          };
+        }
       }
     } catch (error) {
       console.log(error);
