@@ -97,7 +97,7 @@ var Chat = /** @class */ (function () {
                             }
                         }
                         else {
-                            if (responseJSON.orbitaPayload.payload) {
+                            if (responseJSON.orbitaPayload.payload && responseJSON.orbitaPayload.payload.multiagent) {
                                 orbitaPayload = responseJSON.orbitaPayload.payload;
                                 return [2 /*return*/, {
                                         voice: orbitaPayload.multiagent.voice,
@@ -132,7 +132,7 @@ var Chat = /** @class */ (function () {
                                             type: "",
                                             choices: []
                                         },
-                                        rawPayload: {},
+                                        rawPayload: responseJSON.orbitaPayload.payload,
                                         type: "success"
                                     }];
                             }

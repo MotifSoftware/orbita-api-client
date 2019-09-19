@@ -59,7 +59,7 @@ export default class Chat {
           }
         }
       } else {
-        if (responseJSON.orbitaPayload.payload) {
+        if (responseJSON.orbitaPayload.payload && responseJSON.orbitaPayload.payload.multiagent) {
           const orbitaPayload = responseJSON.orbitaPayload.payload;
 
           return {
@@ -95,7 +95,7 @@ export default class Chat {
               type: "",
               choices: []
             },
-            rawPayload: {},
+            rawPayload: responseJSON.orbitaPayload.payload,
             type: "success"
           }
         } else {
